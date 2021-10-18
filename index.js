@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const authRoutes = require('./routes/auth')
 const adminRoutes = require('./routes/AdminRoutes');
 const cors = require('cors')
-mongoose.connect('mongodb://localhost:27017/Attendance_Management', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://Server:1234@cluster0.0ychj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useNewUrlParser: true, useFindAndModify: false, useUnifiedTopology: true })
     .then(() => {
         console.log('DB Connected') 
     })

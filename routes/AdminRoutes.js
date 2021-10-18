@@ -9,7 +9,7 @@ Router.get('/course/:id', getCourse);
 Router.get('/users/:id', getUsers);
 Router.post('/adduser/:id', addUser);
 Router.post('/assigncourse/:id', assignCourse);
-Router.delete('/delete/course/:id', deleteCourse)
+Router.post('/delete/course/:course_id', deleteCourse)
 Router.put('/edit/:id', editUser);
 Router.get('/users/:id/:_id', getUsersByCourseId);
 Router.post('/mark/:id', checkMarkedDates, markAttendance);

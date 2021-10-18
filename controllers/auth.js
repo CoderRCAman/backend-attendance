@@ -2,10 +2,11 @@ const User = require('../models/User')
 //sign up 
 exports.signUp = async (req, res) => {
     const { email, password } = req.body;
+    console.log(email)
     try {
         const user = await User.findOne({ email })
         if (!user) {
-            await new User({ email, password }).save()
+            await new User({ email, password ,role:1}).save()
                 .then((newuser) => {
                     return res.status(200).json(newuser)
                 })
@@ -17,6 +18,7 @@ exports.signUp = async (req, res) => {
         }
     } catch (error) {
         //do something
+        console.log(error)
     }
 }
 
@@ -36,7 +38,7 @@ exports.signin = async (req, res, next) => {
             })
         }
         if (validate.password !== password) {
-            console.log(validate)
+            (validate)
             return res.status(401).json({
                 'Error': 'Password didnt match'
             })

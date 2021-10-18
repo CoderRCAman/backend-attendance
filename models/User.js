@@ -5,12 +5,12 @@ const Schema = mongoose.Schema;
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+       
         trim: true
     },
     specified_id: {
         type: String,
-        required: true,
+       
         trim :true
     },
     email: {

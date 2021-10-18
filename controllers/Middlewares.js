@@ -4,7 +4,7 @@ const ifDateExist = (dates,date) => {
     // return true or false
     //convert date to actual date 
     const convertedDate = [] ; 
-    console.log(`date : ${date}`)
+   
     dates.forEach(element => {
         convertedDate.push(element.split('T')[0])
     });

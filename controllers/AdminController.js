@@ -6,7 +6,7 @@ const { response } = require('express');
 
 
 exports.addCourse = async (req, res) => {
-  //  console.log(req.body);
+  //  (req.body);
     try {
         const id = req.params.id;
         const newCourse = new Course(req.body);
@@ -27,9 +27,27 @@ exports.addCourse = async (req, res) => {
     }
 
 } 
+exports.deleteCourse = async (req, res) => { 
+    const course_id = req.params.course_id;
+    console.log(course_id)
+    try {
+        Course.findOneAndDelete({ _id: course_id }, (err, deletedCourse) => { 
+           
+            if (deletedCourse || !err) {
+                return res.status(200).json({ msg: "Successfully Deleted" });
+            }
+            else {
+                return res.status(400).json({ msg: "Bad Request" });
+            }
+        });
+    } catch (error) {
+        console.log(error)
+    }
+
+}
 
 exports.deleteUser = async (req, res) => {
-      console.log(req.params);
+     
       try {
           const id = req.params.id; // spcific admin id 
           const _id = req.params._id // to delete user id 
@@ -45,9 +63,10 @@ exports.deleteUser = async (req, res) => {
   }
 
 
-
+ 
 exports.getCourse = (req, res) => {
     const id = req.params.id;
+    console.log(id)
     Course.find({specified_id:id})
         .exec((err, courses) => {
             if (err) {
@@ -61,7 +80,7 @@ exports.addUser = async (req, res) => {
     try {
         const id = req.params.id; 
         const userExist = await User.findOne({ email: req.body.email ,specified_id:id  });
-        console.log(userExist)
+      
         if (userExist) return res.status(400).json({ msg: "User already Exist" });
         const user = new User(req.body);
         user.specified_id = id; 
@@ -104,7 +123,7 @@ exports.getUsersByCourseId = async (req, res) => {
         }
         return res.status(404).json({msg:'Not found any user'})
     } catch (error) {
-        console.log(error);
+        console.log(error)
     }
 }
 
@@ -115,10 +134,10 @@ exports.assignCourse = async (req, res) => {
     const stuff = req.body;
     const id = req.params.id;
 
-   // console.log(id);
+   // (id);
     stuff.forEach(items => {
         // //create an attendance object and store in array 
-        // console.log(items)
+        // (items)
         const attendanceObj = {
             _id: new mongoose.Types.ObjectId(),
             course_name: items.course_name,
@@ -145,28 +164,12 @@ exports.assignCourse = async (req, res) => {
 }
 
 
-exports.deleteCourse = async (req, res) => {
-    const course_id = req.params.id;
-    //console.log(course_id)
-    try {
-        Course.findOneAndDelete({ _id: course_id }, (err, deletedCourse) => {
-            if (deletedCourse || !err) {
-                return res.status(200).json({ msg: "Successfully Deleted" });
-            }
-            else {
-                return res.status(400).json({ msg: "Bad Request" });
-            }
-        });
-    } catch (error) {
-        console.log(error);
-    }
 
-}
 exports.editUser = async (req, res) => {
     try {
         const id = req.params.id;
         const update = req.body;
-       // console.log(update);
+       // (update);
 
         User.findByIdAndUpdate(id, update, { new: true }, (err, updatedUser) => {
             if (err || !updatedUser) {
@@ -208,6 +211,7 @@ exports.markAttendance = async (req, res) => {
         const date_of_marking = req.body.date;
         const course_id = req.body.course._id;
         //update our date array in course collection
+        console.log(date_of_marking);
         const updatedCourse = await Course.findByIdAndUpdate(course_id,
             {
                 $push: { dates: date_of_marking }
